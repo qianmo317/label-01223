@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>俄罗斯方块 - Tetris</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 标题区域 - 单独显示 -->
+    <header class="game-header">
+        <h1 class="game-title">俄罗斯方块</h1>
+    </header>
+
+    <!-- 游戏主体区域 -->
+    <div class="game-container">
+        <!-- 左侧面板 -->
+        <div class="side-panel left-panel">
+            <div class="panel-card">
+                <h3>操作说明</h3>
+                <div class="controls-list">
+                    <div class="control-item">
+                        <span class="key">←</span><span class="key">A</span>
+                        <span class="action">左移</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="key">→</span><span class="key">D</span>
+                        <span class="action">右移</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="key">↑</span><span class="key">W</span>
+                        <span class="action">旋转</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="key">↓</span><span class="key">S</span>
+                        <span class="action">软降</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="key">Space</span>
+                        <span class="action">硬降</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="key">P</span>
+                        <span class="action">暂停</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="key">R</span>
+                        <span class="action">重开</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 连接状态 -->
+            <div class="panel-card connection-card">
+                <div class="connection-status">
+                    <span id="connectionDot" class="status-dot disconnected"></span>
+                    <span id="connectionText">连接中...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 游戏主区域 -->
+        <div class="game-main">
+            <div class="game-board-wrapper">
+                <canvas id="gameCanvas" width="300" height="600"></canvas>
+                
+                <!-- 游戏覆盖层 -->
+                <div id="gameOverlay" class="game-overlay">
+                    <div class="overlay-content">
+                        <h2 id="overlayTitle">俄罗斯方块</h2>
+                        <p id="overlayMessage">按 Enter 或点击开始游戏</p>
+                        <button id="startButton" class="game-button">开始游戏</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧面板 -->
+        <div class="side-panel right-panel">
+            <!-- 下一个方块 -->
+            <div class="panel-card">
+                <h3>下一个</h3>
+                <canvas id="nextCanvas" width="120" height="120"></canvas>
+            </div>
+            
+            <!-- 分数 -->
+            <div class="panel-card score-card">
+                <h3>分数</h3>
+                <div id="score" class="score-value">0</div>
+            </div>
+            
+            <!-- 等级 -->
+            <div class="panel-card">
+                <h3>等级</h3>
+                <div id="level" class="level-value">1</div>
+            </div>
+            
+            <!-- 消行数 -->
+            <div class="panel-card">
+                <h3>消行</h3>
+                <div id="lines" class="lines-value">0</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 移动端控制按钮 -->
+    <div class="mobile-controls">
+        <div class="mobile-row">
+            <button class="mobile-btn" data-action="rotate">↑</button>
+        </div>
+        <div class="mobile-row">
+            <button class="mobile-btn" data-action="left">←</button>
+            <button class="mobile-btn" data-action="down">↓</button>
+            <button class="mobile-btn" data-action="right">→</button>
+        </div>
+        <div class="mobile-row">
+            <button class="mobile-btn wide" data-action="drop">硬降</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

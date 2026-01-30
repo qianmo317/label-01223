@@ -1,0 +1,49 @@
+# ===== 通用 =====
+.DS_Store
+*.log
+*.tmp
+*.temp
+.env
+.env.local
+.env.*.local
+
+# ===== IDE =====
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ===== Backend (C++) =====
+backend/build/
+backend/cmake-build-*/
+backend/*.o
+backend/*.a
+backend/*.so
+backend/*.dylib
+backend/tetris_server
+*.out
+
+# ===== CMake =====
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+# ===== Frontend =====
+frontend-user/node_modules/
+frontend-*/node_modules/
+frontend-*/.cache/
+frontend-*/dist/
+frontend-*/build/
+
+# ===== Docker =====
+*.tar
+docker-compose.override.yml
+
+# ===== 其他 =====
+*.bak
+*.backup
+coverage/
+.nyc_output/

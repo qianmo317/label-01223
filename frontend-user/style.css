@@ -1,0 +1,423 @@
+/* 基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-primary: #0a0a1a;
+    --bg-secondary: #12122a;
+    --bg-card: rgba(30, 30, 60, 0.8);
+    --border-color: rgba(100, 100, 255, 0.3);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --accent-primary: #00d4ff;
+    --accent-secondary: #7c3aed;
+    --accent-glow: rgba(0, 212, 255, 0.5);
+}
+
+html, body {
+    min-height: 100vh;
+}
+
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--bg-primary);
+    background-image: 
+        radial-gradient(ellipse at top, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    padding: 30px 20px;
+}
+
+/* ========== 标题区域 - 绝对居中 ========== */
+.game-header {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.game-title {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: 0.5rem;
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: titleGlow 2s ease-in-out infinite alternate;
+    display: inline-block;
+}
+
+@keyframes titleGlow {
+    from {
+        filter: drop-shadow(0 0 10px var(--accent-glow));
+    }
+    to {
+        filter: drop-shadow(0 0 25px var(--accent-glow));
+    }
+}
+
+/* ========== 游戏容器 - 三栏等高布局 ========== */
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ========== 侧边面板 ========== */
+.side-panel {
+    width: 180px;
+    height: 606px; /* 固定高度与游戏画布一致: 600px + 6px边框 */
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.left-panel {
+    justify-content: space-between;
+}
+
+.right-panel {
+    justify-content: stretch; /* 让子元素拉伸填满 */
+}
+
+/* 右侧面板卡片均分高度 */
+.right-panel .panel-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.panel-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    backdrop-filter: blur(10px);
+}
+
+.panel-card h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    color: var(--accent-primary);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+/* 左侧面板 - 操作说明占满剩余空间 */
+.left-panel .panel-card:first-child {
+    flex: 1;
+}
+
+/* 连接状态卡片 */
+.connection-card {
+    flex-shrink: 0;
+}
+
+.connection-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.85rem;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.status-dot.connected {
+    background: #22c55e;
+    box-shadow: 0 0 10px #22c55e;
+}
+
+.status-dot.disconnected {
+    background: #ef4444;
+    box-shadow: 0 0 10px #ef4444;
+}
+
+/* ========== 游戏主区域 ========== */
+.game-main {
+    flex-shrink: 0;
+}
+
+.game-board-wrapper {
+    position: relative;
+    border: 3px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 
+        0 0 30px rgba(0, 212, 255, 0.2),
+        inset 0 0 60px rgba(0, 0, 0, 0.5);
+    background: var(--bg-secondary);
+}
+
+#gameCanvas {
+    display: block;
+    width: 300px;
+    height: 600px;
+}
+
+/* ========== 游戏覆盖层 ========== */
+.game-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(10, 10, 26, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+.game-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.overlay-content {
+    text-align: center;
+    padding: 40px;
+}
+
+.overlay-content h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: var(--accent-primary);
+}
+
+.overlay-content p {
+    color: var(--text-secondary);
+    margin-bottom: 25px;
+    font-size: 1rem;
+}
+
+.game-button {
+    font-family: 'Orbitron', sans-serif;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    background: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.game-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+}
+
+.game-button:active {
+    transform: translateY(0);
+}
+
+/* ========== 下一个方块预览 ========== */
+#nextCanvas {
+    display: block;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+/* ========== 分数显示 ========== */
+.score-value,
+.level-value,
+.lines-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--text-primary);
+}
+
+.score-value {
+    color: #fbbf24;
+    text-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+}
+
+.level-value {
+    color: #22c55e;
+    text-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
+}
+
+.lines-value {
+    color: var(--accent-primary);
+    text-shadow: 0 0 15px var(--accent-glow);
+}
+
+/* ========== 操作说明 ========== */
+.controls-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.control-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
+}
+
+.key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 26px;
+    height: 26px;
+    padding: 0 6px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    color: var(--accent-primary);
+}
+
+.action {
+    color: var(--text-secondary);
+    margin-left: auto;
+}
+
+/* ========== 移动端控制 ========== */
+.mobile-controls {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mobile-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.mobile-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-primary);
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: all 0.1s ease;
+}
+
+.mobile-btn.wide {
+    width: 140px;
+    font-size: 1rem;
+}
+
+.mobile-btn:active {
+    background: var(--accent-secondary);
+    transform: scale(0.95);
+}
+
+/* ========== 响应式设计 ========== */
+@media (max-width: 900px) {
+    .side-panel.left-panel {
+        display: none;
+    }
+    
+    .game-container {
+        gap: 20px;
+    }
+    
+    .side-panel {
+        width: 150px;
+        min-height: 606px;
+    }
+    
+    .panel-card {
+        padding: 14px;
+    }
+    
+    .game-title {
+        font-size: 2rem;
+        letter-spacing: 0.3rem;
+    }
+    
+    .game-header {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 15px 10px;
+    }
+    
+    .game-header {
+        margin-bottom: 20px;
+    }
+    
+    .game-title {
+        font-size: 2rem;
+        letter-spacing: 0.3rem;
+    }
+    
+    .game-subtitle {
+        font-size: 0.85rem;
+    }
+    
+    .game-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .side-panel {
+        display: none;
+    }
+    
+    .game-board-wrapper {
+        max-width: 100%;
+    }
+    
+    #gameCanvas {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    .mobile-controls {
+        display: flex;
+    }
+}
+
+/* ========== 游戏结束动画 ========== */
+@keyframes gameOverShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.game-over .game-board-wrapper {
+    animation: gameOverShake 0.3s ease-in-out;
+}
